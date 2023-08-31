@@ -181,6 +181,52 @@
       }
     ]
   },
+  {
+    id: "4",
+    image:
+      "https://www.ironmanmagazine.com/wp-content/uploads/01workout-1000x600.png",
+    name: "FULL BODY",
+    description: "7x4 CHALLENGE",
+    excersises: [
+      {
+        id: "10",
+        image:
+          "https://sworkit.com/wp-content/uploads/2020/06/sworkit-jumping-jack.gif",
+        name: "JUMPING JACKS",
+        sets:12,
+      },
+      {
+          id:"11",
+          image:"https://www.verywellfit.com/thmb/GG7EXAUxQvwxiu4QAzDBPu6yy44=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/90-3120038--Incline-PushupsGIF-d321334ec54849539010832028d5635a.gif",
+          name:"INCLINE PUSH-UPS",
+          sets:10,
+      },
+      {
+          id:"12",
+          image:"https://media.self.com/photos/583c641ca8746f6e65a60c7e/master/w_1600%2Cc_limit/DIAMOND_PUSHUP_MOTIFIED.gif",
+          name:"INCLINED PUSH-UPS",
+          sets:10,
+      },
+      {
+          id:"13",
+          image:"https://cdn.prod.openfit.com/uploads/2020/03/10162714/wide-arm-push-up.gif",
+          name:"WIDE ARM PUSH-UPS",
+          sets:12,
+      },
+      {
+          id:"14",
+          image:"https://www.yogajournal.com/wp-content/uploads/2021/12/Cobra.gif?width=730",
+          name:"COBRA STRETCH",
+          sets:10,
+      },
+      {
+          id:"15",
+          image:"https://www.vissco.com/wp-content/uploads/animation/sub/double-knee-to-chest-stretch.gif",
+          name:"CHEST STRETCH",
+          sets:10,
+      }
+    ],
+  },
 ];
 
 export default fitnessData

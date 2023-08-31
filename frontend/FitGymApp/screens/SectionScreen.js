@@ -16,11 +16,11 @@ const SectionScreen = ({ navigation }) => {
       <View style={styles.cardContainer}>
         <Pressable onPress={() => handleSelectOption("exercise")} style={styles.card}>
           <Image source={require("../assets/exercisenew.jpg")} style={styles.image} />
-          <Text style={styles.cardText}>Exercise</Text>
+          <Text style={styles.cardText}>Workout Plans</Text>
         </Pressable>
         <Pressable onPress={() => handleSelectOption("nutrition")} style={styles.card}>
           <Image source={require("../assets/nutrition.jpg")} style={styles.image} />
-          <Text style={styles.cardText}>Nutrition</Text>
+          <Text style={styles.cardText}>Nutrition Plans</Text>
         </Pressable>
       </View>
     </View>
@@ -49,9 +49,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: 120,
-    height: 120,
+    width: 140,
+    height: 140,
     marginBottom: 10,
+    borderRadius: 7
   },
   cardText: {
     fontSize: 18,

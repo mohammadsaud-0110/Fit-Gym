@@ -10,19 +10,19 @@ const FitnessCards = () => {
   const navigation = useNavigation();
   return (
     <View>
-      {FitnessData?.map((item, key) => (
+      {FitnessData.map((item, key) => (
         <Pressable
-        onPress={() => navigation.navigate("Workout",{
-          image:item.image,
-          excersises:item.excersises,
-          id:item.id,
-        })}
-          style={{ alignItems: "center", justifyContent: "center", margin: 10 }}
+          onPress={() => navigation.navigate("Workout", {
+            image: item.image,
+            excersises: item.excersises,
+            id: item.id,
+          })}
+          style={{ alignItems: "center", justifyContent: "center", margin: 15 }}
           key={key}
         >
           <Image
-            style={{ width: "100%", height: 140, borderRadius: 7 }}
-            source={{ uri: item.image }}
+            style={{ width: "100%", height: 180, borderRadius: 7 }}
+            source={{uri:item.image}}
           />
           <Text
             style={{
@@ -37,17 +37,18 @@ const FitnessCards = () => {
             {item.description}
           </Text>
           <MaterialCommunityIcons
-            style={{ position: "absolute", color: "white", bottom: 15,left:20 }}
+            style={{ position: "absolute", color: "white", bottom: 15, left: 20 }}
             name="lightning-bolt"
             size={24}
             color="black"
           />
         </Pressable>
       ))}
+      {/* <Text>Workout Plan</Text> */}
     </View>
   );
 };
 
 export default FitnessCards;
 
-const styles = StyleSheet.create({});
+// const styles = StyleSheet.create({});

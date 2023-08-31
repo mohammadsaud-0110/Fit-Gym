@@ -124,7 +124,7 @@ const UserProfileScreen = () => {
         <Text style={styles.buttontext}>Save</Text>
       </Pressable>
       <Pressable style={styles.skipButton} onPress={handleSkip}>
-        <Text style={styles.skipButtonText}>Continue as Guest</Text>
+        <Text style={styles.skipButtonText}>Continue as Guest !</Text>
       </Pressable>
     </View>
   );

@@ -205,6 +205,58 @@ const nutritionData=[
           "description": "Low-calorie option with essential nutrients for recovery."
         }
       ]
+    },
+    {
+      "exerciseName": "Chest Beginner Workout",
+      "image":
+      "https://www.healthkart.com/connect/wp-content/uploads/2016/03/banner-7.jpg",
+      "nutritionItems": [
+        {
+          "image": "https://www.marthastewart.com/thmb/R5e-wnZBjNbvQiYmd1CtBQTFcVY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/924877_master-recipe-brown-rice-05-13126d75658249b48e7c9ac32d180ab2.jpg",
+          "name": "Brown Rice",
+          "calories": 215,
+          "protein": 5,
+          "carbs": 45,
+          "fats": 1.8,
+          "description": "Complex carbs provide energy for workouts and recovery."
+        },
+        {
+          "image": "https://i0.wp.com/post.healthline.com/wp-content/uploads/2023/02/Almonds-Table-Bowl-1296x728-Header.jpg?w=1155&h=1528",
+          "name": "Almonds",
+          "calories": 164,
+          "protein": 6,
+          "carbs": 6,
+          "fats": 14,
+          "description": "Healthy fats and protein for energy and muscle support."
+        },
+        {
+          "image": "https://natashaskitchen.com/wp-content/uploads/2023/05/20230302-0M8A0646-scaled.jpg",
+          "name": "Chicken Thighs",
+          "calories": 209,
+          "protein": 26,
+          "carbs": 0,
+          "fats": 11,
+          "description": "Protein source for muscle building and maintenance."
+        },
+        {
+          "image": "https://domf5oio6qrcr.cloudfront.net/medialibrary/5390/h1218g16207258089583.jpg",
+          "name": "Broccoli",
+          "calories": 55,
+          "protein": 3.7,
+          "carbs": 11,
+          "fats": 0.6,
+          "description": "Rich in nutrients to support recovery and overall health."
+        },
+        {
+          "image": "https://m.media-amazon.com/images/I/91EdPVzD99L._AC_UF1000,1000_QL80_.jpg",
+          "name": "Cauliflower",
+          "calories": 25,
+          "protein": 2,
+          "carbs": 5,
+          "fats": 0.3,
+          "description": "Low-calorie option with essential nutrients for recovery."
+        }
+      ]
     }
   ]
 

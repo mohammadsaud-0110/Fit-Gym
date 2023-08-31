@@ -1,122 +1,94 @@
-import { StyleSheet, Text, View, SafeAreaView, Image,ScrollView } from "react-native";
-import React ,{useContext} from "react";
-import FitnessCards from "../components/FitnessCards";
-import { FitnessItems } from "../Context";
-import fitnessData from "../data/fitness";
+import React, { useContext } from "react";
+import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import FitnessCards from "../components/FitnessCards";
+import { FitnessItems } from "../Context";
+
 const HomeScreen = () => {
-  
-  const {
-   
-    minutes,
-  
-    calories,
-
-    workout,
-  } = useContext(FitnessItems);
-
+  const { minutes, calories, workout } = useContext(FitnessItems);
   const navigation = useNavigation();
+
   return (
-    <ScrollView style={{marginTop:40}}>
-      <Ionicons
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        {/* <Ionicons
           onPress={() => navigation.goBack()}
-          style={{ position: "absolute", top: 50, left: 50 }}
+          style={styles.backButton}
           name="arrow-back-outline"
           size={28}
           color="black"
-        />
+        /> */}
 
-        
-      <View
-        style={{
-          backgroundColor: "red",
-          padding: 10,
-          height: 200,
-          width: "100%",
-        }}
-      >
-        <Text style={{ color: "white", fontWeight: "bold", fontSize: 18 }}>
-          ProFit
-        </Text>
+        <Text style={styles.headerText}>FitGym</Text>
 
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginTop: 20,
-          }}
-        >
-          <View>
-            <Text
-              style={{
-                textAlign: "center",
-                fontWeight: "bold",
-                color: "white",
-                fontSize: 18,
-              }}
-            >
-              {workout}
-            </Text>
-            <Text style={{ color: "#D0D0D0", fontSize: 17, marginTop: 6 }}>
-              WORKOUTS
-            </Text>
+        <View style={styles.statsContainer}>
+          <View style={styles.statItem}>
+            <Text style={styles.statValue}>{workout}</Text>
+            <Text style={styles.statLabel}>WORKOUTS</Text>
           </View>
-
-          <View>
-            <Text
-              style={{
-                textAlign: "center",
-                fontWeight: "bold",
-                color: "white",
-                fontSize: 18,
-              }}
-            >
-              {calories}
-            </Text>
-            <Text style={{ color: "#D0D0D0", fontSize: 17, marginTop: 6 }}>
-              KCAL
-            </Text>
+          <View style={styles.statItem}>
+            <Text style={styles.statValue}>{calories}</Text>
+            <Text style={styles.statLabel}>KCAL</Text>
           </View>
-
-          <View>
-            <Text
-              style={{
-                textAlign: "center",
-                fontWeight: "bold",
-                color: "white",
-                fontSize: 18,
-              }}
-            >
-              {minutes}
-            </Text>
-            <Text style={{ color: "#D0D0D0", fontSize: 17, marginTop: 6 }}>
-              MINS
-            </Text>
+          <View style={styles.statItem}>
+            <Text style={styles.statValue}>{minutes}</Text>
+            <Text style={styles.statLabel}>MINS</Text>
           </View>
         </View>
-
-        <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <Image
-            style={{
-              width: "95%",
-              height: 200,
-              marginTop: 20,
-              borderRadius: 7,
-              
-            }}
-            source={{
-              uri: "https://t3.ftcdn.net/jpg/00/90/21/22/360_F_90212267_soThMAr7ZpdkWSN4fjoW6wLR6zDjc4kK.jpg",
-            }}
-          />
-        </View>
-        <FitnessCards  />
       </View>
-    </ScrollView>
+
+      <ScrollView style={styles.scrollContainer}>
+        <FitnessCards />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
-export default HomeScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 40,
+  },
+  header: {
+    backgroundColor: "red",
+    padding: 10,
+    height: 200,
+    width: "100%",
+  },
+  backButton: {
+    position: "absolute",
+    top: 50,
+    left: 50,
+  },
+  headerText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+  statsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 20,
+  },
+  statItem: {
+    alignItems: "center",
+  },
+  statValue: {
+    textAlign: "center",
+    fontWeight: "bold",
+    color: "white",
+    fontSize: 18,
+  },
+  statLabel: {
+    color: "#D0D0D0",
+    fontSize: 17,
+    marginTop: 6,
+  },
+  scrollContainer: {
+    flex: 1,
+  },
+});
 
-const styles = StyleSheet.create({});
+export default HomeScreen;

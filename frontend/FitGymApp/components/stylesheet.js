@@ -33,6 +33,17 @@ const styles = StyleSheet.create({
     fontSize:25,
     padding:10,
     marginBottom: 20,
+  },
+  skipButton:{
+    width: '70%',
+    marginTop: 10,
+    padding:10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  skipButtonText:{
+    color: 'blue',
+    fontSize:16,
   }
 
 });
