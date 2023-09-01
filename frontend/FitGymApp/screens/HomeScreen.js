@@ -12,13 +12,13 @@ const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        {/* <Ionicons
+        <Ionicons
           onPress={() => navigation.goBack()}
           style={styles.backButton}
           name="arrow-back-outline"
           size={28}
           color="black"
-        /> */}
+        />
 
         <Text style={styles.headerText}>FitGym</Text>
 

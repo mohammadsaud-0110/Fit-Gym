@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor:'blue',
-
   },
   buttontext:{
     color: 'white',
@@ -42,6 +41,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   skipButtonText:{
+    color: 'blue',
+    fontSize:16,
+  },
+  trainerButton:{
+    width: '70%',
+    marginTop: 10,
+    padding:10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  trainerButtonText:{
     color: 'blue',
     fontSize:16,
   }

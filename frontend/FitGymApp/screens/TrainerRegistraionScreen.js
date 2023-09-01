@@ -5,24 +5,23 @@ import axios from "axios";
 import { useNavigation } from "@react-navigation/native"; 
 import { Picker } from "@react-native-picker/picker";
 
-const UserProfileScreen = () => {
+const TrainerRegistrationScreen = () => {
   const navigation = useNavigation();
 
   const [name, setName] = useState("");
-  const [age, setAge] = useState("");
-  const [gender, setGender] = useState(""); 
-  const [height, setHeight] = useState("");
-  const [weight, setWeight] = useState("");
+  const [gender, setGender] = useState("");
+  const [specialization, setSpecialization] = useState(""); 
+  const [experience, setExperience] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [contactNumber, setContactNumber] = useState("+91");
+  const [contactNumber, setContactNumber] = useState("");
 
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
   const handleSaveProfile = async () => {
     // Perform validation
-    if (!name || !age || !gender || !height || !weight || !email || !password || !contactNumber) {
+    if (!name || !specialization || !gender || !experience || !email || !password || !contactNumber) {
       alert("All fields are required");
       return;
     }
@@ -37,40 +36,35 @@ const UserProfileScreen = () => {
       return;
     }
 
-    const userProfile = {
+    const trainerProfile = {
       name,
-      age,
       gender,
-      height,
-      weight,
+      specialization,
+      experience,
       email,
       contact_number: contactNumber,
     };
     try {
-        const response = await axios.post("YOUR_API_URL_HERE", userProfile);
-        console.log("User profile saved:", response.data);
-        Alert.alert("Success", "User profile saved successfully");
-        gotoLogin();
+        const response = await axios.post("YOUR_API_URL_HERE", trainerProfile);
+        console.log("Trainer profile saved:", response.data);
+        Alert.alert("Success", "Trainer registration successful..!");
+        handleRedirect();
     }
     catch (error) {
         console.error("Error saving user profile:", error);
-        Alert.alert("Error", "An error occurred while saving user profile");
-    }
+        Alert.alert("Error", "An error occurred while saving trainer profile");
+     }
     
-    // console.log("User Profile:", userProfile);
   };
 
-  const gotoLogin = () => {
-    navigation.navigate("Login"); // Navigate to the section screen
+  const handleRedirect = () => {
+    navigation.navigate("Login"); // Navigate to the login screen
   };
 
-  const gotoTrainer = () => {
-    navigation.navigate("TrainerRegistration")
-  }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>User Registration</Text>
+      <Text style={styles.text}>Trainer Registration</Text>
       <TextInput
         style={styles.input}
         placeholder="Name"
@@ -80,9 +74,9 @@ const UserProfileScreen = () => {
       />
       <TextInput
         style={styles.input}
-        placeholder="Age"
-        value={age}
-        onChangeText={setAge}
+        placeholder="Specialization"
+        value={specialization}
+        onChangeText={setSpecialization}
         required={true} // Add required attribute
       />
       <Picker
@@ -98,15 +92,9 @@ const UserProfileScreen = () => {
       </Picker>
       <TextInput
         style={styles.input}
-        placeholder="Height"
-        value={height}
-        onChangeText={setHeight}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Weight"
-        value={weight}
-        onChangeText={setWeight}
+        placeholder="Experience in years"
+        value={experience}
+        onChangeText={setExperience}
       />
       <TextInput
         style={styles.input}
@@ -130,15 +118,12 @@ const UserProfileScreen = () => {
         <Text style={styles.buttontext}>Register</Text>
       </Pressable>
 
-      <Pressable style={styles.skipButton} onPress={gotoLogin}>
+      <Pressable style={styles.skipButton} onPress={handleRedirect}>
         <Text style={styles.skipButtonText}>Got to Login!</Text>
       </Pressable>
 
-      <Pressable style={styles.trainerButton} onPress={gotoTrainer}>
-        <Text style={styles.trainerButtonText}>Trainer Registration</Text>
-      </Pressable>
     </View>
   );
 };
 
-export default UserProfileScreen;
+export default TrainerRegistrationScreen;

@@ -10,6 +10,8 @@ import SectionScreen from "./screens/SectionScreen";
 import NutritionScreen from "./screens/NutritionScreen";
 import NutritionCard from "./components/NutritionCards";
 import UserProfileScreen from "./screens/UserProfileScreen";
+import UserLoginScreen from "./screens/LoginScreen";
+import TrainerRegistrationScreen from "./screens/TrainerRegistraionScreen";
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -18,6 +20,8 @@ const StackNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="User" component={UserProfileScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Login" component={UserLoginScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="TrainerRegistration" component={TrainerRegistrationScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Section" component={SectionScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Workout" component={WorkoutScreen} options={{ headerShown: false }} />

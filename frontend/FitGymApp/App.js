@@ -10,9 +10,9 @@ export default function App() {
     <>
       <StatusBar style="auto" />
       <FitnessContext>
-      <StackNavigator />
-    </FitnessContext>
-    </> 
+        <StackNavigator />
+      </FitnessContext>
+    </>
   );
 }
 
