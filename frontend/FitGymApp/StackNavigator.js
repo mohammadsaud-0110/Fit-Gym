@@ -10,7 +10,7 @@ import SectionScreen from "./screens/SectionScreen";
 import NutritionScreen from "./screens/NutritionScreen";
 import NutritionCard from "./components/NutritionCards";
 import UserProfileScreen from "./screens/UserProfileScreen";
-import UserLoginScreen from "./screens/LoginScreen";
+import Login from "./screens/LoginScreen";
 import TrainerRegistrationScreen from "./screens/TrainerRegistraionScreen";
 
 const StackNavigator = () => {
@@ -19,8 +19,9 @@ const StackNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        
+        <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         <Stack.Screen name="User" component={UserProfileScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Login" component={UserLoginScreen} options={{ headerShown: false }} />
         <Stack.Screen name="TrainerRegistration" component={TrainerRegistrationScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Section" component={SectionScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />

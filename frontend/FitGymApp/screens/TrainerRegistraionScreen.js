@@ -23,16 +23,12 @@ const TrainerRegistrationScreen = () => {
     // Perform validation
     if (!name || !specialization || !gender || !experience || !email || !password || !contactNumber) {
       alert("All fields are required");
+      console.log();
       return;
     }
 
     if (!/^\S+@\S+\.\S+$/.test(email)) {
       alert("Invalid email format");
-      return;
-    }
-
-    if (password.length < 8) {
-      alert("Password must be at least 8 characters long");
       return;
     }
 
@@ -43,17 +39,25 @@ const TrainerRegistrationScreen = () => {
       experience,
       email,
       contact_number: contactNumber,
+      password
     };
-    try {
-        const response = await axios.post("YOUR_API_URL_HERE", trainerProfile);
-        console.log("Trainer profile saved:", response.data);
-        Alert.alert("Success", "Trainer registration successful..!");
-        handleRedirect();
-    }
-    catch (error) {
-        console.error("Error saving user profile:", error);
-        Alert.alert("Error", "An error occurred while saving trainer profile");
-     }
+    await fetch('http://127.0.0.1:8000/trainer/signup/', {
+          method: 'POST',
+          headers: {
+            // Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(trainerProfile),
+        })
+        .then((res) =>{
+          return res.json();
+        })
+        .then(async (data) => {
+          const {message} = data;
+          alert(message);
+          handleRedirect();
+        })
+        .catch((err) => alert(err));
     
   };
 
@@ -72,6 +76,14 @@ const TrainerRegistrationScreen = () => {
         onChangeText={setName}
         required={true} // Add required attribute
       />
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        required={true} // Add required attribute
+      />
+      {emailError ? <Text style={styles.error}>{emailError}</Text> : null}
       <TextInput
         style={styles.input}
         placeholder="Specialization"
@@ -98,12 +110,12 @@ const TrainerRegistrationScreen = () => {
       />
       <TextInput
         style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
+        placeholder="Contact Number"
+        value={contactNumber}
+        onChangeText={setContactNumber}
         required={true} // Add required attribute
       />
-      {emailError ? <Text style={styles.error}>{emailError}</Text> : null}
+      
       <TextInput
         style={styles.input}
         placeholder="Password"

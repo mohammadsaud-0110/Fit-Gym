@@ -21,22 +21,14 @@ const UserProfileScreen = () => {
   const [passwordError, setPasswordError] = useState("");
 
   const handleSaveProfile = async () => {
-    // Perform validation
     if (!name || !age || !gender || !height || !weight || !email || !password || !contactNumber) {
       alert("All fields are required");
       return;
     }
-
     if (!/^\S+@\S+\.\S+$/.test(email)) {
       alert("Invalid email format");
       return;
     }
-
-    if (password.length < 8) {
-      alert("Password must be at least 8 characters long");
-      return;
-    }
-
     const userProfile = {
       name,
       age,
@@ -45,28 +37,30 @@ const UserProfileScreen = () => {
       weight,
       email,
       contact_number: contactNumber,
+      password
     };
-    try {
-        const response = await axios.post("YOUR_API_URL_HERE", userProfile);
-        console.log("User profile saved:", response.data);
-        Alert.alert("Success", "User profile saved successfully");
-        gotoLogin();
-    }
-    catch (error) {
-        console.error("Error saving user profile:", error);
-        Alert.alert("Error", "An error occurred while saving user profile");
-    }
-    
-    // console.log("User Profile:", userProfile);
+    await fetch('http://127.0.0.1:8000/user/signup/', {
+          method: 'POST',
+          headers: {
+            // Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userProfile),
+        })
+        .then((res) =>{
+          return res.json();
+        })
+        .then(async (data) => {
+          const {message} = data;
+          alert(message);
+          gotoLogin();
+        })
+        .catch((err) => alert(err));
   };
 
   const gotoLogin = () => {
     navigation.navigate("Login"); // Navigate to the section screen
   };
-
-  const gotoTrainer = () => {
-    navigation.navigate("TrainerRegistration")
-  }
 
   return (
     <View style={styles.container}>
@@ -134,9 +128,6 @@ const UserProfileScreen = () => {
         <Text style={styles.skipButtonText}>Got to Login!</Text>
       </Pressable>
 
-      <Pressable style={styles.trainerButton} onPress={gotoTrainer}>
-        <Text style={styles.trainerButtonText}>Trainer Registration</Text>
-      </Pressable>
     </View>
   );
 };

@@ -54,6 +54,28 @@ const styles = StyleSheet.create({
   trainerButtonText:{
     color: 'blue',
     fontSize:16,
+  },
+  userRegBtn:{
+    width: '70%',
+    marginTop: 10,
+    padding:10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  userRegText:{
+    color: 'blue',
+    fontSize:16,
+  },
+  tnRegBtn:{
+    width: '70%',
+    marginTop: 10,
+    padding:10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  tnRegText:{
+    color: 'blue',
+    fontSize:16,
   }
 
 });

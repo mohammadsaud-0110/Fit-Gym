@@ -59,27 +59,38 @@ def trainer_signup(request):
 def user_login(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        try:
-            trainer = CustomUser.objects.get(email=data.get('email'))
-            if bcrypt.checkpw(data.get('password').encode('utf-8'), trainer.password.encode('utf-8')):
-                return JsonResponse({"message": "User logged in"})
-            else:
-                return JsonResponse({"message": "Wrong Password"}, status=401)
-        except CustomUser.DoesNotExist:
-            return JsonResponse({"message": "User not found"}, status=401)
+        email = data.get('email')
+        password = data.get('password')
 
-@csrf_exempt
-def trainer_login(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
         try:
-            trainer = Trainer.objects.get(email=data.get('email'))
-            if bcrypt.checkpw(data.get('password').encode('utf-8'), trainer.password.encode('utf-8')):
-                return JsonResponse({"message": "Trainer logged in"})
+            user = CustomUser.objects.get(email=email)
+        except CustomUser.DoesNotExist:
+            try:
+                trainer = Trainer.objects.get(email=email)
+            except Trainer.DoesNotExist:
+                return JsonResponse({"message": "User not found"}, status=401)
+
+            if bcrypt.checkpw(password.encode('utf-8'), trainer.password.encode('utf-8')):
+                trainerData = {
+                    'id' : trainer.id,
+                    'name' : trainer.name,
+                    'email' : trainer.email
+                }
+                return JsonResponse({"message": "Trainer logged in", 'account': trainerData, "role" : 'trainer'})
             else:
                 return JsonResponse({"message": "Wrong Password"}, status=401)
-        except Trainer.DoesNotExist:
-            return JsonResponse({"message": "Trainer not found"}, status=401)
+
+        if bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
+            userData = {
+                    'id' : user.id,
+                    'name' : user.name,
+                    'email' : user.email
+                }
+            return JsonResponse({"message": "User logged in", 'account' : userData, 'role': 'user'})
+        else:
+            return JsonResponse({"message": "Wrong Password"}, status=401)
+
+    return JsonResponse({"message": "Invalid request method"}, status=405)
         
 
 @csrf_exempt

@@ -58,19 +58,21 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: "absolute",
-    top: 50,
-    left: 50,
+    top: 20,
+    left: 20, // Adjust the left position as needed
   },
   headerText: {
     color: "white",
     fontWeight: "bold",
     fontSize: 18,
+    textAlign: "center",
   },
   statsContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     marginTop: 20,
+    paddingHorizontal: 20,
   },
   statItem: {
     alignItems: "center",
