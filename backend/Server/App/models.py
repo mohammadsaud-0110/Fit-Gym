@@ -1,6 +1,9 @@
 from django.db import models
 
 class CustomUser(models.Model):
+    class Meta:
+        db_table = "users_table"
+
     name = models.CharField(max_length=255)
     age = models.PositiveIntegerField()
     gender = models.CharField(max_length=10)
@@ -11,6 +14,9 @@ class CustomUser(models.Model):
     password = models.CharField(max_length=128)
 
 class Trainer(models.Model):
+    class Meta:
+        db_table = "trainer_table"
+
     name = models.CharField(max_length=255)
     gender = models.CharField(max_length=10)
     specialization = models.CharField(max_length=255)
@@ -20,6 +26,9 @@ class Trainer(models.Model):
     password = models.CharField(max_length=128)
 
 class WorkoutPlan(models.Model):
+    class Meta:
+        db_table = "workoutplan_table"
+
     trainerId = models.ForeignKey(Trainer, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     image = models.TextField(default='')
@@ -27,44 +36,58 @@ class WorkoutPlan(models.Model):
     description = models.TextField(default='')
 
 class Exercise(models.Model):
+    class Meta:
+        db_table = "exercise_table"
+
     name = models.CharField(max_length=255)
     image = models.TextField(default='')
     sets = models.PositiveIntegerField()
     reps = models.PositiveIntegerField()
     workoutId = models.ForeignKey(WorkoutPlan, on_delete=models.CASCADE)
 
-class NutritionPlan(models.Model):
-    trainer = models.ForeignKey(Trainer, on_delete=models.CASCADE)
-    plan_name = models.CharField(max_length=255)
-    goal = models.CharField(max_length=255)
-    duration = models.PositiveIntegerField()
-    guidelines = models.TextField()
+# class NutritionPlan(models.Model):
+#     trainer = models.ForeignKey(Trainer, on_delete=models.CASCADE)
+#     plan_name = models.CharField(max_length=255)
+#     goal = models.CharField(max_length=255)
+#     duration = models.PositiveIntegerField()
+#     guidelines = models.TextField()
 
 
 # {
-#     'name' : 'workout plan name',
-#     'image' : 'workout plan image url',
+#     'name' : 'nutrition plan name',
+#     'image' : 'nutrition plan image url',
+#     'goal' : 'Drop down : Weight Loss, Muscle Gain, Balanced Diet, etc.',
 #     'duration' : 'number of weeks',
-#     'description' : 'text',
+#     'guideline' : 'text',
 #     'trainerId' : 'from async storage',
-#     'exercise' : [
+#     'workoutPlanId' : 'from async storage',
+#     'foodItems' : [
 #         {
-#             'name' : 'exercise 1 name',
-#             'image' : 'exercise 1 image url / gif url',
-#             'sets': 'number',
-#             'reps' : 'number'
+#             'name' : 'food 1 name',
+#             'image' : 'food 1 image url ',
+#             'calories': 'number',
+#             'protein' : 'number',
+#             'carbs' : 'number',
+#             'fats' : 'number',
+#            'description': 'text'
 #         },
 #         {
-#             'name' : 'exercise 2 name',
-#             'image' : 'exercise 2 image url / gif url',
-#             'sets': 'number',
-#             'reps' : 'number'
+#             'name' : 'food 2 name',
+#             'image' : 'food 2 image url ',
+#             'calories': 'number',
+#             'protein' : 'number',
+#             'carbs' : 'number',
+#             'fats' : 'number',
+#            'description': 'text'
 #         },
 #         {
-#             'name' : 'exercise 3 name',
-#             'image' : 'exercise 3 image url / gif url',
-#             'sets': 'number',
-#             'reps' : 'number'
-#         }
+#             'name' : 'food 3 name',
+#             'image' : 'food 3 image url ',
+#             'calories': 'number',
+#             'protein' : 'number',
+#             'carbs' : 'number',
+#             'fats' : 'number',
+#            'description': 'text'
+#         },
 #     ]
 # }

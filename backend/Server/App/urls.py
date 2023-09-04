@@ -3,7 +3,7 @@
 from django.urls import path
 from .views import user_signup, trainer_signup, user_login, get_users, get_trainers
 from .views import logout_view
-from .views import get_workout_plans, get_nutrition_plans, create_workout_plan
+from .views import get_workout_plans, create_workout_plan
 
 urlpatterns = [
     path('user/signup/', user_signup, name='user-signup'),
@@ -13,6 +13,6 @@ urlpatterns = [
     path('trainers/', get_trainers, name='get-trainers'),
     path('logout/', logout_view, name='logout'),
     path('workout-plans/', get_workout_plans, name='get-workout-plans'),
-    path('nutrition-plans/', get_nutrition_plans, name='get-nutrition-plans'),
-    path('create/workout/', create_workout_plan, name='get-workout-plans'),
+    # path('nutrition-plans/', get_nutrition_plans, name='get-nutrition-plans'),
+    path('create/workout/', create_workout_plan, name='create-workout-plans'),
 ]

@@ -1,7 +1,3 @@
-from django.shortcuts import render
-
-# Create your views here.
-# api/views.py
 
 from django.http import JsonResponse
 from django.contrib.auth.models import User
@@ -10,8 +6,8 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import bcrypt
 from django.core import serializers
-from .models import CustomUser, Trainer, WorkoutPlan, NutritionPlan
-from .serializers import WorkoutPlanSerializer, NutritionPlanSerializer
+from .models import CustomUser, Trainer, WorkoutPlan, Exercise
+from .serializers import WorkoutPlanSerializer
 from rest_framework.decorators import api_view
 
 @csrf_exempt
@@ -116,12 +112,49 @@ def get_workout_plans(request):
     serializer = WorkoutPlanSerializer(workout_plans, many=True)
     return JsonResponse(serializer.data, safe=False)
 
-@api_view(['GET'])
-def get_nutrition_plans(request):
-    nutrition_plans = NutritionPlan.objects.all()
-    serializer = NutritionPlanSerializer(nutrition_plans, many=True)
-    return JsonResponse(serializer.data, safe=False)
+# @api_view(['GET'])
+# def get_nutrition_plans(request):
+#     nutrition_plans = NutritionPlan.objects.all()
+#     serializer = NutritionPlanSerializer(nutrition_plans, many=True)
+#     return JsonResponse(serializer.data, safe=False)
 
+@csrf_exempt
 def create_workout_plan(request):
-    
-    return JsonResponse({"message": "Workout Plan Created"})
+    if request.method == 'POST':
+        try:
+            # Parse the JSON data received from the frontend
+            data = json.loads(request.body)
+
+            # Retrieve or create the Trainer instance based on trainerId
+            trainer_id = data["trainerId"]
+            trainer = Trainer.objects.get(id=trainer_id)
+
+            # Create and save the WorkoutPlan instance
+            workout_plan = WorkoutPlan(
+                name=data["name"],
+                image=data["image"],
+                duration=data["duration"],
+                description=data["description"],
+                trainerId=trainer,
+            )
+            workout_plan.save()
+            # print(f"Newly created WorkoutPlan - ID: {workout_plan.id}, Name: {workout_plan.name}, Image: {workout_plan.image}, Duration: {workout_plan.duration}, Description: {workout_plan.description}")
+            # print("#########")
+
+            # Create and save Exercise instances associated with the WorkoutPlan
+            for exercise_data in data["excersises"]:
+                exercise = Exercise(
+                    name=exercise_data["name"],
+                    image=exercise_data["image"],
+                    sets=exercise_data["sets"],
+                    reps=exercise_data["reps"],
+                    workoutId=workout_plan,
+                )
+                exercise.save()
+                # print(exercise.id)
+
+            return JsonResponse({"message": "Workout plan created successfully"})
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
+    else:
+        return JsonResponse({"error": "Invalid request method"}, status=405)
