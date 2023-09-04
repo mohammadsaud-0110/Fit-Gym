@@ -52,3 +52,22 @@ const FitnessCards = () => {
 export default FitnessCards;
 
 // const styles = StyleSheet.create({});
+
+// Workout Plan model:
+// {
+//   name: Text,
+//   image: Text,
+//   goal: Text,
+//   duration: Number,
+//   description: Text,
+//   trainerId: reference to trainer Id who is creating this workout plan [(SELECT * FROM fitgymdb.app_trainer;) this is the table name created by django ] 
+// }
+
+// Exercise model:
+// {
+//   name: Text,
+//   image: Text,
+//   sets: Number,
+//   reps: Number,
+//   workoutId: reference to workout plan this exercise belongs to
+// }

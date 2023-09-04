@@ -121,3 +121,7 @@ def get_nutrition_plans(request):
     nutrition_plans = NutritionPlan.objects.all()
     serializer = NutritionPlanSerializer(nutrition_plans, many=True)
     return JsonResponse(serializer.data, safe=False)
+
+def create_workout_plan(request):
+    
+    return JsonResponse({"message": "Workout Plan Created"})

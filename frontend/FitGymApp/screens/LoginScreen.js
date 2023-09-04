@@ -32,7 +32,6 @@ const Login = () => {
       }),
     })
     .then((res) =>{
-      // console.log(res);
       return res.json();
     })
     .then(async (data) => {
@@ -42,12 +41,12 @@ const Login = () => {
       await AsyncStorage.setItem("loggedRole", data.role)
       await AsyncStorage.setItem("loggedEmail", data.account.email)
       await AsyncStorage.setItem("loggedName", data.account.name)
+      
       if (data.role === 'trainer') {
-        // Navigate to trainer dashboard
         // navigation.navigate('TrainerDashboard'); // Replace with your actual trainer dashboard screen
-      } else if (data.role === 'user') {
-        // Navigate to sections page
-        handleSkip(); // Replace with your actual sections screen
+      }
+      else if (data.role === 'user') {
+        handleSkip(); // navigate to sections page
       }
     })
     .catch((err) => alert(err));
