@@ -60,7 +60,6 @@ class Exercise(models.Model):
 #     'duration' : 'number of weeks',
 #     'guideline' : 'text',
 #     'trainerId' : 'from async storage',
-#     'workoutPlanId' : 'from async storage',
 #     'foodItems' : [
 #         {
 #             'name' : 'food 1 name',

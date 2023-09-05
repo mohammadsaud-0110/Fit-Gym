@@ -1,4 +1,3 @@
-
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -7,13 +6,22 @@ import json
 import bcrypt
 from django.core import serializers
 from .models import CustomUser, Trainer, WorkoutPlan, Exercise
-from .serializers import WorkoutPlanSerializer
+from .serializers import WorkoutPlanSerializer, CustomUserSerializer, TrainerSerializer, ExerciseSerializer
 from rest_framework.decorators import api_view
 
 @csrf_exempt
 def user_signup(request):
     if request.method == 'POST':
         data = json.loads(request.body)
+        email = data.get('email')
+
+        # Check if a trainer with the same email already exists
+        existing_user = CustomUser.objects.filter(email=email).first()
+
+        if existing_user:
+            # If a trainer with the same email exists, return an error response
+            return JsonResponse({"message": "User with this email already exists"}, status=400)
+
         password = data.get('password')
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         
@@ -35,6 +43,15 @@ def user_signup(request):
 def trainer_signup(request):
     if request.method == 'POST':
         data = json.loads(request.body)
+        email = data.get('email')
+
+        # Check if a trainer with the same email already exists
+        existing_trainer = Trainer.objects.filter(email=email).first()
+
+        if existing_trainer:
+            # If a trainer with the same email exists, return an error response
+            return JsonResponse({"message": "Trainer with this email already exists"}, status=400)
+
         password = data.get('password')
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
@@ -88,35 +105,30 @@ def user_login(request):
 
     return JsonResponse({"message": "Invalid request method"}, status=405)
         
-
 @csrf_exempt
 def get_users(request):
     users = CustomUser.objects.all()
-    users_data = serializers.serialize('json', users)
-    return JsonResponse(users_data, safe=False)
+    serializer = CustomUserSerializer(users, many=True)
+    return JsonResponse(serializer.data, safe=False)
 
 @csrf_exempt
 def get_trainers(request):
     trainers = Trainer.objects.all()
-    trainers_data = serializers.serialize('json', trainers)
-    return JsonResponse(trainers_data, safe=False)
-
-@csrf_exempt
-def logout_view(request):
-    logout(request)
-    return JsonResponse({"message": "Logged out successfully"})
+    serializer = TrainerSerializer(trainers, many=True)
+    return JsonResponse(serializer.data, safe=False)
 
 @api_view(['GET'])
-def get_workout_plans(request):
+def all_workout_plans(request):
     workout_plans = WorkoutPlan.objects.all()
     serializer = WorkoutPlanSerializer(workout_plans, many=True)
     return JsonResponse(serializer.data, safe=False)
 
-# @api_view(['GET'])
-# def get_nutrition_plans(request):
-#     nutrition_plans = NutritionPlan.objects.all()
-#     serializer = NutritionPlanSerializer(nutrition_plans, many=True)
-#     return JsonResponse(serializer.data, safe=False)
+@api_view(['GET'])
+def all_exercise(request):
+    exercise = Exercise.objects.all()
+    serializer = ExerciseSerializer(exercise, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
 
 @csrf_exempt
 def create_workout_plan(request):
