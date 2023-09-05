@@ -5,8 +5,10 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import bcrypt
 from django.core import serializers
-from .models import CustomUser, Trainer, WorkoutPlan, Exercise
-from .serializers import WorkoutPlanSerializer, CustomUserSerializer, TrainerSerializer, ExerciseSerializer
+from .models import CustomUser, Trainer, WorkoutPlan, Exercise, NutritionPlan, Food
+from .serializers import CustomUserSerializer, TrainerSerializer 
+from .serializers import WorkoutPlanSerializer, ExerciseSerializer
+from .serializers import NutritionPlanSerializer, FoodSerializer
 from rest_framework.decorators import api_view
 
 @csrf_exempt
@@ -129,6 +131,17 @@ def all_exercise(request):
     serializer = ExerciseSerializer(exercise, many=True)
     return JsonResponse(serializer.data, safe=False)
 
+@api_view(['GET'])
+def all_nutrition_plans(request):
+    nutrition_plans = NutritionPlan.objects.all()
+    serializer = NutritionPlanSerializer(nutrition_plans, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+@api_view(['GET'])
+def all_food(request):
+    food = Food.objects.all()
+    serializer = FoodSerializer(food, many=True)
+    return JsonResponse(serializer.data, safe=False)
 
 @csrf_exempt
 def create_workout_plan(request):
@@ -166,6 +179,52 @@ def create_workout_plan(request):
                 # print(exercise.id)
 
             return JsonResponse({"message": "Workout plan created successfully"})
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
+    else:
+        return JsonResponse({"error": "Invalid request method"}, status=405)
+
+
+@csrf_exempt
+def create_nutrition_plan(request):
+    if request.method == 'POST':
+        try:
+            # Parse the JSON data received from the frontend
+            data = json.loads(request.body)
+
+            # Retrieve or create the Trainer instance based on trainerId
+            trainer_id = data["trainerId"]
+            trainer = Trainer.objects.get(id=trainer_id)
+
+            # Create and save the WorkoutPlan instance
+            nutrition_plan = NutritionPlan(
+                name=data["name"],
+                image=data["image"],
+                duration=data["duration"],
+                guideline=data["guideline"],
+                goal=data["goal"],
+                trainerId=trainer,
+            )
+            nutrition_plan.save()
+            # print(f"Newly created WorkoutPlan - ID: {workout_plan.id}, Name: {workout_plan.name}, Image: {workout_plan.image}, Duration: {workout_plan.duration}, Description: {workout_plan.description}")
+            # print("#########")
+
+            # Create and save Food instances associated with the NutritionPlan
+            for food_data in data["foodItems"]:
+                food = Food(
+                    name=food_data["name"],
+                    image=food_data["image"],
+                    calories=food_data["calories"],
+                    protein=food_data["protein"],
+                    carbs=food_data["carbs"],
+                    fats=food_data["fats"],
+                    description=food_data["description"],
+                    nutritionId=nutrition_plan,
+                )
+                food.save()
+                # print(exercise.id)
+
+            return JsonResponse({"message": "Nutrition plan created successfully"})
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=400)
     else:

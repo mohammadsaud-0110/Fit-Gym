@@ -45,12 +45,29 @@ class Exercise(models.Model):
     reps = models.PositiveIntegerField()
     workoutId = models.ForeignKey(WorkoutPlan, on_delete=models.CASCADE)
 
-# class NutritionPlan(models.Model):
-#     trainer = models.ForeignKey(Trainer, on_delete=models.CASCADE)
-#     plan_name = models.CharField(max_length=255)
-#     goal = models.CharField(max_length=255)
-#     duration = models.PositiveIntegerField()
-#     guidelines = models.TextField()
+class NutritionPlan(models.Model):
+    class Meta:
+        db_table = "nutritionplan_table"
+
+    trainerId = models.ForeignKey(Trainer, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    image = models.TextField(default='')
+    goal = models.CharField(max_length=255)
+    duration = models.PositiveIntegerField()
+    guideline = models.TextField()
+
+class Food(models.Model):
+    class Meta:
+        db_table = "food_table"
+
+    name = models.CharField(max_length=255)
+    image = models.TextField(default='')
+    calories = models.PositiveIntegerField()
+    protein = models.FloatField()
+    carbs = models.FloatField()
+    fats = models.FloatField()
+    description = models.TextField(default='')
+    nutritionId = models.ForeignKey(NutritionPlan, on_delete=models.CASCADE)
 
 
 # {

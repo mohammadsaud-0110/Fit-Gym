@@ -1,7 +1,7 @@
 # api/serializers.py
 
 from rest_framework import serializers
-from .models import CustomUser, Trainer, WorkoutPlan, Exercise
+from .models import CustomUser, Trainer, WorkoutPlan, Exercise, NutritionPlan, Food
 
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,4 +21,14 @@ class WorkoutPlanSerializer(serializers.ModelSerializer):
 class ExerciseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exercise
+        fields = '__all__'
+
+class NutritionPlanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NutritionPlan
+        fields = '__all__'
+
+class FoodSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Food
         fields = '__all__'
