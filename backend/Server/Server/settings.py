@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -79,17 +81,22 @@ WSGI_APPLICATION = 'Server.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'fitgymdb',
-        'USER': 'root',
-        'PASSWORD': 'r00t4Boo81@c55!9q@@',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'fitgymdb',
+#         'USER': 'root',
+#         'PASSWORD': 'r00t4Boo81@c55!9q@@',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 
+DatabaseUrl=config("url")
+DATABASES = {
+    'default': dj_database_url.parse(DatabaseUrl)
+}
+# AUTH_USER_MODEL = 'user.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
