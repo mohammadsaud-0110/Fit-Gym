@@ -5,11 +5,13 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import bcrypt
 from django.core import serializers
-from .models import CustomUser, Trainer, WorkoutPlan, Exercise, NutritionPlan, Food
+from .models import CustomUser, Trainer, WorkoutPlan, Exercise, NutritionPlan, Food, Goal, ActivityLog
 from .serializers import CustomUserSerializer, TrainerSerializer 
 from .serializers import WorkoutPlanSerializer, ExerciseSerializer
 from .serializers import NutritionPlanSerializer, FoodSerializer
+from .serializers import GoalSerializer, ActivitySerializer
 from rest_framework.decorators import api_view
+
 
 @csrf_exempt
 def user_signup(request):
@@ -119,24 +121,28 @@ def get_trainers(request):
     serializer = TrainerSerializer(trainers, many=True)
     return JsonResponse(serializer.data, safe=False)
 
+@csrf_exempt
 @api_view(['GET'])
 def all_workout_plans(request):
     workout_plans = WorkoutPlan.objects.all()
     serializer = WorkoutPlanSerializer(workout_plans, many=True)
     return JsonResponse(serializer.data, safe=False)
 
+@csrf_exempt
 @api_view(['GET'])
 def all_exercise(request):
     exercise = Exercise.objects.all()
     serializer = ExerciseSerializer(exercise, many=True)
     return JsonResponse(serializer.data, safe=False)
 
+@csrf_exempt
 @api_view(['GET'])
 def all_nutrition_plans(request):
     nutrition_plans = NutritionPlan.objects.all()
     serializer = NutritionPlanSerializer(nutrition_plans, many=True)
     return JsonResponse(serializer.data, safe=False)
 
+@csrf_exempt
 @api_view(['GET'])
 def all_food(request):
     food = Food.objects.all()
@@ -184,7 +190,6 @@ def create_workout_plan(request):
     else:
         return JsonResponse({"error": "Invalid request method"}, status=405)
 
-
 @csrf_exempt
 def create_nutrition_plan(request):
     if request.method == 'POST':
@@ -229,3 +234,109 @@ def create_nutrition_plan(request):
             return JsonResponse({"error": str(e)}, status=400)
     else:
         return JsonResponse({"error": "Invalid request method"}, status=405)
+
+# delete workout plans, exercises, nutrition plans, food
+@csrf_exempt
+@api_view(['GET'])
+def delete_all_data(request):
+    WorkoutPlan.objects.all().delete()
+    Exercise.objects.all().delete()
+    NutritionPlan.objects.all().delete()
+    Food.objects.all().delete()
+    return JsonResponse({"message":"all data deleted"})
+
+
+# create new goal
+@csrf_exempt
+def create_goal(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+
+            # Create and save the Goal instance
+            goal_instance = Goal(
+                name=data.get('planName'),
+                goal=data.get('selectedGoal'),
+                duration=data.get('duration'),
+                description=data.get('description'),
+                completed=False,
+                userId_id=data.get('loggedUID')
+            )
+            goal_instance.save()
+
+            return JsonResponse({ "message": "Goal created successfully" }, status=201)  # Return a JSON response with status code 201 (Created)
+        except Exception as e:
+            # Handle any exceptions and return an error response
+            return JsonResponse({"error": str(e)}, status=400)  # Return an error response with status code 400 (Bad Request)
+    else:
+        return JsonResponse({"error": "Invalid request method"}, status=405)  # Return an error response for invalid method
+
+#  update a goal
+@csrf_exempt
+def update_goal(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        goal_id = data.get('goalId')
+        user_id = data.get('userId')
+
+        try:
+            goal = Goal.objects.get(id=goal_id, userId_id=user_id)
+            goal.completed = True
+            goal.save()
+            return JsonResponse({"message": "Goal marked as completed"})
+        except Goal.DoesNotExist:
+            return JsonResponse({"message": "Goal not found"}, status=404)
+
+@csrf_exempt
+def all_goal(request):
+    allgoal = Goal.objects.all()
+    serializer = GoalSerializer(allgoal, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+# users activity log
+@csrf_exempt
+def log_activity(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        
+        logged_uid = data.get('loggedUID')
+        user = CustomUser.objects.get(id=logged_uid)
+
+        workout = data.get('workout')
+        calories = data.get('calories')
+        minutes = data.get('minutes')
+        completed = data.get('completed', [])  # Default to an empty list if not provided
+        
+        # Create and save the ActivityLog instance
+        activity_log = ActivityLog(
+            userId=user,
+            workout=workout,
+            calories=calories,
+            minutes=minutes,
+        )
+        
+        # Set the completed data using the set_completed method
+        activity_log.set_completed(completed)
+        
+        activity_log.save()
+        
+        return JsonResponse({"message": "Activity log created successfully"})
+    else:
+        return JsonResponse({"message": "Invalid request method"}, status=400)
+
+
+@csrf_exempt
+def all_activity(request):
+    allactivity = ActivityLog.objects.all()
+    serializer = ActivitySerializer(allactivity, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+
+#  delete all activity and goals
+@csrf_exempt
+@api_view(['GET'])
+def delete_log_activity_data(request):
+    Goal.objects.all().delete()
+    ActivityLog.objects.all().delete()
+    return JsonResponse({"message":"all activity and goals deleted"})
+

@@ -1,4 +1,5 @@
 from django.db import models
+import json
 
 class CustomUser(models.Model):
     class Meta:
@@ -69,6 +70,35 @@ class Food(models.Model):
     description = models.TextField(default='')
     nutritionId = models.ForeignKey(NutritionPlan, on_delete=models.CASCADE)
 
+class Goal(models.Model):
+    class Meta:
+        db_table = "goal_table"
+
+    name = models.CharField(max_length=255)
+    goal = models.TextField(default='')
+    duration = models.PositiveIntegerField()
+    description = models.TextField(default='')
+    completed = models.BooleanField(default=False)
+    userId = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+
+class ActivityLog(models.Model):
+    class Meta:
+        db_table = "activity_table"
+
+    workout = models.PositiveIntegerField()
+    calories = models.PositiveIntegerField()
+    minutes = models.PositiveIntegerField()
+    completed = models.TextField(blank=True, null=True)  # Use TextField for JSON data
+    userId = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+
+    def set_completed(self, completed_data):
+        self.completed = json.dumps(completed_data)
+
+    def get_completed(self):
+        if self.completed:
+            return json.loads(self.completed)
+        return []
+
 
 # {
 #     'name' : 'nutrition plan name',
@@ -106,4 +136,38 @@ class Food(models.Model):
 #            'description': 'text'
 #         },
 #     ]
+# }
+
+# goal
+# {
+#     "name" : "new wrok",
+#     "goal" : "mass gain",
+#     "duration" : 4,
+#     "description" : "eat",
+#     "completed" : "True/False",
+#     "userId" : 1
+# }
+
+
+# activity
+# {
+#     "workout" : "Number",
+#     "calories" : "Number",
+#     "minutes" : "Number",
+#     "completed" : "Array of Strings",
+#     "userId" : "Number"
+# }
+
+# update a goal
+# {
+#     "goalId" : 1,
+#     "userId" : 1
+# }
+
+# {
+#     "loggedUID" : 2,
+#     "workout" : 3,
+#     "calories" : 18.9,
+#     "minutes" : 7.5,
+#     "completed" : ['JUMPING JACKS', 'INCLINE PUSH-UPS', 'INCLINED PUSH-UPS']
 # }
