@@ -70,13 +70,33 @@ FitGym is a mobile application aimed at providing users with a fitness-tracking 
 
 ## Screenshots
 
-### User Signup
+### User signup
+ 
+### User dashboard
 
-![User Signup](insert_screenshot_url_here)
+### User activity log screen
 
-### Trainer Signup
+### User goal list screen
 
-![Trainer Signup](insert_screenshot_url_here)
+### User new goal setting screen
+
+### Workout list screen
+
+### Exercise screen
+
+### Nutrition list screen
+
+### Food list screen
+
+
+### Trainer signup
+
+### Trainer dashboard
+
+### Trainer create workout screen
+
+### Trainer create nutrition screen
+
 
 ...
 
@@ -137,9 +157,9 @@ FitGym is a mobile application aimed at providing users with a fitness-tracking 
 
 ## Deployment
 
-Frontend: [Link to Deployed Frontend](insert_frontend_deployment_link_here)
+Frontend: https://expo.dev/artifacts/eas/76MLZmmTkwCAiMXRrevcC3.aab
 
-Backend: [Link to Deployed Backend](insert_backend_deployment_link_here)
+Backend: https://fitgym-backend.onrender.com/
 
 ## Testing
 
