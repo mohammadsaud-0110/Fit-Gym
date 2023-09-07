@@ -1,28 +1,50 @@
-import { StyleSheet, Text, View, Pressable, Image } from "react-native";
-import React from "react";
-import fitness from "../data/fitness";
+import { StyleSheet, Text, View, Pressable, Image, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const FitnessCards = () => {
-  const FitnessData = fitness;
-  // console.log(FitnessData);
+  const [fitnessData, setFitnessData] = useState([]);
   const navigation = useNavigation();
+
+  useEffect(() => {
+    // Make an Axios GET request to fetch fitness data from your API or server
+    axios.get("https://fitgym-backend.onrender.com/all/workoutplans/")
+      .then((response) => {
+        // Assuming the response data is an array of fitness objects
+        setFitnessData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching fitness data:", error);
+      });
+  }, []); // The empty dependency array ensures this effect runs once when the component mounts
+
+  const storeSelectedFitnessId = async (id) => {
+    try {
+      await AsyncStorage.setItem('selectedFitnessId', id.toString());
+    } catch (error) {
+      console.error("Error storing selected fitness ID:", error);
+    }
+  };
+
   return (
     <View>
-      {FitnessData.map((item, key) => (
+      {fitnessData.map((item, key) => (
         <Pressable
-          onPress={() => navigation.navigate("Workout", {
-            image: item.image,
-            excersises: item.excersises,
-            id: item.id,
-          })}
+          onPress={() => {
+            storeSelectedFitnessId(item.id); // Store the clicked fitness data's ID
+            navigation.navigate("Workout", {
+              // Pass any other data you need to the WorkoutScreen
+            });
+          }}
           style={{ alignItems: "center", justifyContent: "center", margin: 15 }}
           key={key}
         >
           <Image
             style={{ width: "100%", height: 180, borderRadius: 7 }}
-            source={{uri:item.image}}
+            source={{ uri: item.image }}
           />
           <Text
             style={{
@@ -34,7 +56,7 @@ const FitnessCards = () => {
               top: 20,
             }}
           >
-            {item.description}
+            {item.name}
           </Text>
           <MaterialCommunityIcons
             style={{ position: "absolute", color: "white", bottom: 15, left: 20 }}
@@ -44,30 +66,10 @@ const FitnessCards = () => {
           />
         </Pressable>
       ))}
-      {/* <Text>Workout Plan</Text> */}
     </View>
   );
 };
 
 export default FitnessCards;
 
-// const styles = StyleSheet.create({});
-
-// Workout Plan model:
-// {
-//   name: Text,
-//   image: Text,
-//   goal: Text,
-//   duration: Number,
-//   description: Text,
-//   trainerId: reference to trainer Id who is creating this workout plan [(SELECT * FROM fitgymdb.app_trainer;) this is the table name created by django ] 
-// }
-
-// Exercise model:
-// {
-//   name: Text,
-//   image: Text,
-//   sets: Number,
-//   reps: Number,
-//   workoutId: reference to workout plan this exercise belongs to
-// }
+const styles = StyleSheet.create({});

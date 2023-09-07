@@ -1,14 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Pressable, Image, Text, ScrollView, SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import nutritionData from "../data/nutrition"; 
 import { Ionicons } from "@expo/vector-icons";
+import axios from "axios";
 
 const NutritionScreen = () => {
   const navigation = useNavigation();
+  const [nutritionData, setNutritionData] = useState([]);
+
+  useEffect(() => {
+    // Make an Axios GET request to fetch nutrition data from your API or server
+    axios.get("https://fitgym-backend.onrender.com/all/nutritionplans/")
+      .then((response) => {
+        // Assuming the response data is an array of nutrition objects
+        setNutritionData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching nutrition data:", error);
+      });
+  }, []);
 
   const handleSectionPress = (exercise) => {
-    navigation.navigate("Single", { exercise: exercise });
+    // Pass the selected ID to the Single screen
+    navigation.navigate("Single", { selectedId: exercise.id });
   };
 
   return (
@@ -18,10 +32,10 @@ const NutritionScreen = () => {
         style={styles.backIcon}
         name="arrow-back-outline"
         size={28}
-        color="white"
+        color="black"
       />
 
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView style={{ marginTop:35  }}>
         {nutritionData.map((exercise, index) => (
           <Pressable
             key={index}
@@ -29,7 +43,7 @@ const NutritionScreen = () => {
             onPress={() => handleSectionPress(exercise)}
           >
             <Image source={{ uri: exercise.image }} style={styles.exerciseImage} />
-            <Text style={styles.exerciseName}>{exercise.exerciseName}</Text>
+            <Text style={styles.exerciseName}>{exercise.name}</Text>
           </Pressable>
         ))}
       </ScrollView>
@@ -41,23 +55,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f5f5f5",
-    marginTop: 30,
+    marginTop: 50,
   },
   backIcon: {
     position: "absolute",
-    top: 50,
-    left: 20,
-  },
-  scrollContent: {
-    padding: 20,
+    top: 10,
+    left: 10,
+    zIndex: 1,
   },
   exerciseContainer: {
-    marginBottom: 20,
+    marginTop: 5,
+    marginBottom: 15,
     backgroundColor: "white",
     borderRadius: 10,
-    elevation: 5,
-    shadowColor: "#000",
-    shadowOpacity: 0.2,
+    elevation: 5, // Shadow for Android
+    shadowColor: "#000", // Shadow for iOS
+    shadowOpacity: 0.3,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 4,
   },

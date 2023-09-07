@@ -1,7 +1,5 @@
 import React from "react";
-import { View, Text, Image, Pressable, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { View, Text, Image, Pressable, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 
 const SectionScreen = ({ navigation }) => {
   const handleSelectOption = (option) => {
@@ -9,87 +7,122 @@ const SectionScreen = ({ navigation }) => {
       navigation.navigate("Home");
     } else if (option === "nutrition") {
       navigation.navigate("Nutrition");
+    } else if (option === "diet") {
+      navigation.navigate("Diet");
+    } else if (option === "goal") {
+      navigation.navigate("GoalList");
+    } else if (option === "activity") {
+      navigation.navigate("Activity");
+    } else if (option === "logout") {
+      navigation.navigate("Logout");
     }
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Ionicons
-          onPress={() => navigation.goBack()}
-          name="arrow-back-outline"
-          size={28}
-          color="white"
+    <SafeAreaView style={styles.container}>
+      <View style={styles.logoContainer}>
+        <Image
+          source={require('../assets/logo2.png')}
+          style={styles.logo}
         />
-        <Text style={styles.title}>Choose an Option</Text>
-        {/* <Text>{ AsyncStorage.getItem("loggedName")}</Text> */}
       </View>
-
-      <View style={styles.middleContainer}>
-        <Pressable
-          onPress={() => handleSelectOption("exercise")}
-          style={styles.card}
-        >
-          <Image
-            source={require("../assets/exercisenew.jpg")}
-            style={styles.image}
-          />
-          <Text style={styles.cardText}>Workout Plans</Text>
-        </Pressable>
-        <Pressable
-          onPress={() => handleSelectOption("nutrition")}
-          style={styles.card}
-        >
-          <Image
-            source={require("../assets/nutrition.jpg")}
-            style={styles.image}
-          />
-          <Text style={styles.cardText}>Nutrition Plans</Text>
-        </Pressable>
-      </View>
-    </View>
+      <ScrollView style={styles.scrollContainer}>
+        <View style={styles.cardContainer}>
+          <Pressable onPress={() => handleSelectOption("exercise")} style={styles.card}>
+            <View style={styles.cardContent}>
+              <Text style={styles.cardText}>Workout Plans</Text>
+              <Image source={require("../assets/exercisenew.jpg")} style={styles.image} />
+            </View>
+          </Pressable>
+          <Pressable onPress={() => handleSelectOption("nutrition")} style={styles.card}>
+            <View style={styles.cardContent}>
+              <Text style={styles.cardText}>Nutrition Plans</Text>
+              <Image source={require("../assets/nutrition.jpg")} style={styles.image} />
+            </View>
+          </Pressable>
+          <Pressable onPress={() => handleSelectOption("diet")} style={styles.card}>
+            <View style={styles.cardContent}>
+              <Text style={styles.cardText}>General Diet Plans</Text>
+              <Image source={require("../assets/14-days-.jpg")} style={styles.image} />
+            </View>
+          </Pressable>
+          <Pressable onPress={() => handleSelectOption("goal")} style={styles.card}>
+            <View style={styles.cardContent}>
+              <Text style={styles.cardText}>Set Goals</Text>
+              <Image source={require("../assets/goals.jpg")} style={styles.image} />
+            </View>
+          </Pressable>
+          <Pressable onPress={() => handleSelectOption("activity")} style={styles.card}>
+            <View style={styles.cardContent}>
+              <Text style={styles.cardText}>Activity Log</Text>
+              <Image source={require("../assets/logo-200.png")}
+                style={{ width: 110, height: 110, marginRight: 10, borderRadius: 60, }} />
+            </View>
+          </Pressable>
+          <Pressable onPress={() => handleSelectOption("logout")} style={styles.card}>
+            <View style={styles.cardContent}>
+              <Text style={styles.cardText}>Logout</Text>
+              <Image source={require("../assets/logout.png")} style={styles.image} />
+            </View>
+          </Pressable>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#ffffff",
   },
-  header: {
-    flexDirection: "row",
+  logoContainer: {
     alignItems: "center",
-    backgroundColor: "#007bff", // Header background color
-    padding: 10,
+    justifyContent: "flex-end",
+    backgroundColor: "#007BFF",
+    paddingTop: 30,
+    paddingBottom: 10,
+    marginTop:50,
   },
-  title: {
-    flex: 1, // Take up remaining space
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "white",
-    textAlign: "center",
+  logo: {
+    width: 150,
+    height: 150,
+    borderRadius: 50,
+    marginBottom: 20,
   },
-  middleContainer: {
+  scrollContainer: {
     flex: 1,
+    backgroundColor: "#f2f2f2",
+  },
+  cardContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
     justifyContent: "center",
-    alignItems: "center",
+    paddingHorizontal: 10,
+    paddingVertical: 20,
   },
   card: {
+    width: "45%",
+    maxWidth: 300,
     margin: 10,
     padding: 20,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#ffffff",
     borderRadius: 10,
+    elevation: 3,
+  },
+  cardContent: {
     alignItems: "center",
   },
   image: {
-    width: 140,
-    height: 140,
+    width: 120,
+    height: 120,
     marginBottom: 10,
-    borderRadius: 7,
+    borderRadius: 60,
   },
   cardText: {
     fontSize: 18,
     fontWeight: "bold",
+    color: "#333",
   },
 });
 

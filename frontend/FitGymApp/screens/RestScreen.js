@@ -22,11 +22,11 @@ const RestScreen = () => {
     return () => clearTimeout(timer);
   });
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ marginTop: 60 }}>
       <Image
         resizeMode="contain"
         source={{
-          uri: "https://previews.123rf.com/images/leonhartrizal/leonhartrizal1412/leonhartrizal141200007/34916614-man-take-a-break-after-exercise.jpg",
+          uri: "https://i.gifer.com/7kvp.gif",
         }}
         style={{ width: "100%", height: 420 }}
       />
@@ -39,7 +39,7 @@ const RestScreen = () => {
           textAlign: "center",
         }}
       >
-        TAKE A BREAK!
+        TAKE A BREAK! 
       </Text>
 
       <Text
@@ -52,6 +52,16 @@ const RestScreen = () => {
       >
         {timeLeft}
       </Text>
+
+      <Text
+        style={{
+          fontSize: 15,
+          fontWeight: "900",
+          marginTop: 50,
+          textAlign: "center",
+        }}
+      > 'usually 30 - 60 seconds' </Text>
+
     </SafeAreaView>
   );
 };
