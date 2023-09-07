@@ -173,9 +173,6 @@ Rigorous testing, including unit tests, integration tests, and end-to-end tests,
 4. Push your changes to your fork.
 5. Create a pull request on the main repository's GitHub page.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
 ## Contact
 
