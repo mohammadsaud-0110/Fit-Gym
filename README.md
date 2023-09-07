@@ -2,7 +2,8 @@
 
 FitGym is a comprehensive health and wellness mobile application developed using React Native. It empowers users to track their fitness goals, connect with fitness trainers, and access personalized workout and nutrition plans.
 
-![logo2](https://github.com/mohammadsaud-0110/Fit-Gym/assets/112760057/dac2f384-92e8-472d-9cd2-e96e5ee0a310)
+![icon](https://github.com/mohammadsaud-0110/Fit-Gym/assets/112760057/e45aeef8-e294-4528-a2f4-00a425b0559d)
+
 
 
 ## Table of Contents
