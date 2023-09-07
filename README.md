@@ -176,6 +176,6 @@ Rigorous testing, including unit tests, integration tests, and end-to-end tests,
 
 ## Contact
 
-If you have any questions or suggestions, please feel free to [open an issue](https://github.com/mohammadsaud-0110/Fit-Gym/issues) or contact us at [your-email@example.com](mailto:mdsaud.mrj@gmail.com). 📬
+If you have any questions or suggestions, please feel free to [open an issue](https://github.com/mohammadsaud-0110/Fit-Gym/issues) or contact us at [mdsaud.mrj@gmail.com](mailto:mdsaud.mrj@gmail.com). 📬
 
 Happy fitness tracking! 💪🏼🥦
