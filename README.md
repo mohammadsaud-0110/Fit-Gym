@@ -30,43 +30,6 @@ FitGym is a mobile application aimed at providing users with a fitness-tracking 
 - Django
 - Postgres
 
-## Milestones
-
-### Milestone 1: Initial Setup and User Profile
-
-**Project Setup:**
-Set up a new React Native project using the appropriate command-line tools.
-
-**Navigation Setup:**
-Configure navigation using React Navigation to create a flow between screens.
-
-**User Profile Screen:**
-Design a screen where users can input their profile details like name, age, and gender.
-
-**State Management:**
-Implement state management using React's built-in `useState` hook for handling user input.
-
-**Styling:**
-Apply basic styling to the profile screen using React Native's `StyleSheet` component.
-
-### Milestone 2: Fitness Goals
-
-**Goal Setting Screen:**
-Create a new screen for users to set fitness goals such as weight loss or muscle gain.
-
-**Input Components:**
-Implement input components for goal type and target using `TextInput` and `Picker`.
-
-**Data Validation:**
-Add validation to ensure users provide necessary information when setting goals.
-
-**State Management Enhancement:**
-Expand the use of `useState` to handle goal-related states and user input.
-
-**Navigation Enhancement:**
-Configure navigation to smoothly move between the profile and goal-setting screens.
-
-...
 
 ## Entities
 
